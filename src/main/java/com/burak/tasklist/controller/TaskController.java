@@ -9,6 +9,8 @@ import org.hibernate.annotations.ParamDef;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @Transactional
@@ -21,6 +23,24 @@ public class TaskController {
     public TaskController(TaskService taskService,UserService userService) {
         this.taskService = taskService;
         this.userService = userService;
+    }
+
+    @GetMapping("/tasks")
+    public List<Task> getMyTasks(@RequestParam String name) {
+        List<Task> allTasks = taskService.getAllTasks();
+        User user = userService.findByUsername(name);
+        Long userID = user.getId();
+        List<Task> returningTasks = new ArrayList<Task>();
+        for(Task t : allTasks) {
+
+            if(t.getUser().getId() == userID) {
+                returningTasks.add(t);
+            }
+
+        }
+
+        return returningTasks;
+
     }
 
     @PostMapping("/tasks")
