@@ -18,6 +18,8 @@ public class User extends BaseEntity {
 
     private String password;
 
+    private int completedTasks;
+
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
 
@@ -25,9 +27,10 @@ public class User extends BaseEntity {
 
     }
 
-    public User(String name,String password, List<Task> tasks) {
+    public User(String name,String password,int completedTasks, List<Task> tasks) {
         this.name = name;
         this.password = password;
+        this.completedTasks = completedTasks;
         this.tasks = tasks;
     }
 
@@ -45,6 +48,14 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getCompletedTasks() {
+        return completedTasks;
+    }
+
+    public void setCompletedTasks(int completedTasks) {
+        this.completedTasks = completedTasks;
     }
 
     public List<Task> getTasks() {

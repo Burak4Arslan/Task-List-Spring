@@ -5,7 +5,6 @@ import com.burak.tasklist.entity.Task;
 import com.burak.tasklist.entity.User;
 import com.burak.tasklist.service.TaskService;
 import com.burak.tasklist.service.UserService;
-import org.hibernate.annotations.ParamDef;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -46,7 +45,22 @@ public class TaskController {
     }
 
     @DeleteMapping("tasks")
-    public void saveTask(@RequestParam Long id){
+    public void deleteTask(@RequestParam Long id){
+        taskService.delete(id);
+    }
+
+    @DeleteMapping("tasks/completed")
+    public void deleteCompletedTask(@RequestParam Long id){
+        Task myTask = taskService.getTask(id);
+
+        Long userId = myTask.getUser().getId();
+
+        User myUser = userService.findById(userId);
+
+        myUser.setCompletedTasks(myUser.getCompletedTasks()+1);
+
+        userService.save(myUser);
+
         taskService.delete(id);
     }
 

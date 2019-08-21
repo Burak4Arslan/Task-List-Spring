@@ -19,8 +19,13 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public User userLogin(@RequestParam String username,@RequestParam String password) {
+    public User userLogin(@RequestParam String username, @RequestParam String password) {
+
         User user = userService.findByUsername(username);
+
+        if(user==null) {
+            return null;
+        }
 
         if(user.getPassword().equals(password)) {
             return user;
@@ -30,8 +35,14 @@ public class UserController {
 
     }
 
+    @GetMapping("/users/completedTaskCount")
+    public int getCompletedTaskCount(@RequestParam String username) {
+        return userService.findByUsername(username).getCompletedTasks();
+    }
+
     @PostMapping("/users")
     public User saveUser(@RequestBody final User user) {
+
         List<User> allUsers = userService.findAll();
 
         for (User iteUser : allUsers) {

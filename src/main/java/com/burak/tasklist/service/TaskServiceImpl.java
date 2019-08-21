@@ -1,7 +1,6 @@
 package com.burak.tasklist.service;
 
 import com.burak.tasklist.entity.Task;
-import com.burak.tasklist.entity.User;
 import com.burak.tasklist.repository.TaskRepository;
 import com.burak.tasklist.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public Task getTask(Long id) {
+        return taskRepository.findById(id).get();
     }
 
     @Override
