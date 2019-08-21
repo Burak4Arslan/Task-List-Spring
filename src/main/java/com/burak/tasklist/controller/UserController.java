@@ -19,8 +19,15 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public User userLogin(@RequestParam String username) {
-        return userService.findByUsername(username);
+    public User userLogin(@RequestParam String username,@RequestParam String password) {
+        User user = userService.findByUsername(username);
+
+        if(user.getPassword().equals(password)) {
+            return user;
+        } else {
+            return null;
+        }
+
     }
 
     @PostMapping("/users")
@@ -28,15 +35,11 @@ public class UserController {
         List<User> allUsers = userService.findAll();
 
         for (User iteUser : allUsers) {
-
             if(iteUser.getName().equals(user.getName())) {
                 return null;
             }
-
         }
-
         return userService.save(user);
-
     }
 
 }

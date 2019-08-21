@@ -32,21 +32,22 @@ public class TaskController {
         Long userID = user.getId();
         List<Task> returningTasks = new ArrayList<Task>();
         for(Task t : allTasks) {
-
             if(t.getUser().getId() == userID) {
                 returningTasks.add(t);
             }
-
         }
-
         return returningTasks;
-
     }
 
     @PostMapping("/tasks")
     public Task saveTask(@RequestBody Task task, @RequestParam String name){
         task.setUser(userService.findByUsername(name));
         return taskService.save(task);
+    }
+
+    @DeleteMapping("tasks")
+    public void saveTask(@RequestParam Long id){
+        taskService.delete(id);
     }
 
 }
