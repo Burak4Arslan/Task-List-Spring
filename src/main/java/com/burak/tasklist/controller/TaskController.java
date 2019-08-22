@@ -27,11 +27,10 @@ public class TaskController {
     @GetMapping("/tasks")
     public List<Task> getMyTasks(@RequestParam String name) {
         List<Task> allTasks = taskService.getAllTasks();
-        User user = userService.findByUsername(name);
-        Long userID = user.getId();
-        List<Task> returningTasks = new ArrayList<Task>();
+        Long userID = userService.findByUsername(name).getId();
+        List<Task> returningTasks = new ArrayList<>();
         for(Task t : allTasks) {
-            if(t.getUser().getId() == userID) {
+            if(t.getUser().getId().equals(userID)) {
                 returningTasks.add(t);
             }
         }
@@ -41,6 +40,11 @@ public class TaskController {
     @PostMapping("/tasks")
     public Task saveTask(@RequestBody Task task, @RequestParam String name){
         task.setUser(userService.findByUsername(name));
+
+        if(task.getUser()==null) {
+            return null;
+        }
+
         return taskService.save(task);
     }
 

@@ -40,6 +40,11 @@ public class UserController {
         return userService.findByUsername(username).getCompletedTasks();
     }
 
+    @GetMapping("/users/allCompletedTaskCount")
+    public List<User> getAllCompletedTaskCount() {
+        return userService.findAll();
+    }
+
     @PostMapping("/users")
     public User saveUser(@RequestBody final User user) {
 
@@ -51,6 +56,17 @@ public class UserController {
             }
         }
         return userService.save(user);
+    }
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/users")
+    public void deleteUser(@RequestParam String adminID,@RequestParam Long userID){
+
+        if(adminID.equals("5")) {
+            userService.deleteById(userID);
+        } else {
+
+        }
+
     }
 
 }
