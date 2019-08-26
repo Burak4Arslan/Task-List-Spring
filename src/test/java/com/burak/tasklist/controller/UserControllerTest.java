@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.burak.tasklist.entity.User;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +79,25 @@ public class UserControllerTest {
     @Test
     public void saveUser() {
         User user1 = new User("burak","b",10,null);
+        User user2 = new User("bigi","b",15,null);
+        User user3 = new User("bi","b",3,null);
         List<User> users = new ArrayList<>();
         users.add(user1);
+        users.add(user2);
+
+        when(userService.findAll()).thenReturn(users);
+        when(userService.save(user3)).thenReturn(user3);
+
+        User takenUsernameUser = userController.saveUser(user1);
+        User newUser = userController.saveUser(user3);
+
+        assertEquals(null,takenUsernameUser);
+        assertEquals(user3,newUser);
 
     }
 
     @Test
     public void deleteUser() {
+
     }
 }

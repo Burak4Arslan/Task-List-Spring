@@ -65,6 +65,19 @@ public class UserServiceImplTest {
 
     @Test
     public void save() {
+
+        User user = new User("burak","b",5,null);
+        List<User> mockUsers = new ArrayList<>();
+        mockUsers.add(user);
+        User newUser = new User("bigi","b",10,null);
+
+        when(userRepository.save(user)).thenReturn(null);
+        when(userRepository.save(newUser)).thenReturn(newUser);
+
+        User myUser = userService.save(newUser);
+
+        assertEquals(newUser,myUser);
+        verify(userRepository,times(2));
     }
 
     @Test

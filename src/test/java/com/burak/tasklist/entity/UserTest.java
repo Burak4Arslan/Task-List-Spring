@@ -3,6 +3,9 @@ package com.burak.tasklist.entity;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class UserTest {
@@ -49,9 +52,23 @@ public class UserTest {
 
     @Test
     public void getTasks() {
+        Task task = new Task("koş",null);
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+        User myUser = new User("bi","b",5,tasks);
+
+        assertEquals(tasks,myUser.getTasks());
     }
 
     @Test
     public void setTasks() {
+        Task task = new Task("koş",user);
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+        User myUser = new User("bi","b",5,null);
+        user.setTasks(tasks);
+
+        assertEquals(tasks,user.getTasks());
+
     }
 }
